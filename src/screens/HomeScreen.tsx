@@ -1,38 +1,33 @@
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {FC, useLayoutEffect} from 'react';
-import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {HomeStackList} from '../stack/HomeStack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import GlobalStyles from '../styles/global';
 
 export type HomeStackProp = StackNavigationProp<HomeStackList, 'Home'>;
 
 const HomeScreen: FC = () => {
-  const {navigate, toggleDrawer} = useNavigation<HomeStackProp>();
-  const {setOptions} = useNavigation<HomeStackProp>();
+  const {navigate} = useNavigation<HomeStackProp>();
+  const {colors, dark} = useTheme();
 
-  useLayoutEffect(() => {
-    setOptions({
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => {
-            toggleDrawer();
-          }}
-          style={{
-            display: 'flex',
-            paddingLeft: 17,
-            flex: 1,
-            justifyContent: 'center',
-          }}>
-          <Icon name="menu" color="black" size={30} />
-        </TouchableOpacity>
-      ),
-    });
-  }, [setOptions, toggleDrawer]);
+  //useLayoutEffect(() => {}, []);
 
   return (
-    <SafeAreaView style={{display: 'flex', flex: 1}}>
-      <Text style={{alignSelf: 'center', marginTop: 10, fontSize: 35, fontWeight: 'bold'}}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.flex,
+        GlobalStyles.flex1,
+        {backgroundColor: colors.background},
+      ]}>
+      <StatusBar barStyle={dark ? 'light-content' : 'dark-content'} />
+      <Text
+        style={[
+          GlobalStyles.center,
+          GlobalStyles.h1,
+          {marginTop: 10, fontWeight: 'bold', color: colors.text},
+        ]}>
         MIRÁ QUE TE COMO EH!
       </Text>
       <TouchableOpacity
